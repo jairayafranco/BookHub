@@ -1,0 +1,108 @@
+import { create } from 'zustand'
+import { Store } from '../types/Store'
+import { getLocalStorageBooks, getLocalStorageToReadBooks, setLocalStorageBooks, removeLocalStorageBooks, setLocalStorageToReadBooks } from '../utils/storageBooks'
+import '../utils/syncTabs'
+
+const initialFilterParams = {
+    genre: "Todas",
+    pageCount: 0,
+    name: ""
+}
+
+export const useBookStore = create<Store>()((set, get) => ({
+    books: getLocalStorageBooks(),
+    toReadBooks: getLocalStorageToReadBooks(),
+    filterParams: initialFilterParams,
+    rangeValue: 0,
+    modalBook: null,
+
+    setRangeValue: (value) => {
+        set(() => ({ rangeValue: value }))
+    },
+
+    getPageCount: () => {
+        const storeBooks = get().books
+        const pages = storeBooks.library.map(({ book }) => book.pages)
+        const minPageCount = Math.min(...pages) === Infinity ? 0 : Math.min(...pages)
+        const maxPageCount = Math.max(...pages) === -Infinity ? 0 : Math.max(...pages)
+
+        return { minPageCount, maxPageCount }
+    },
+
+    getBookGenres: () => {
+        const tempStoreBooks = getLocalStorageBooks()
+        const genres = tempStoreBooks.library.map(({ book }) => book.genre)
+        return [...new Set(genres)]
+    },
+
+    setFilterBookParams(name, value) {
+        set((state) => ({
+            filterParams: {
+                ...state.filterParams,
+                [name]: value
+            }
+        }))
+    },
+
+    filterBooks: () => {
+        const tempStoreBooks = getLocalStorageBooks()
+        const { genre, pageCount, name } = get().filterParams
+
+        const filteredBooks = tempStoreBooks.library.filter(({ book }) => {
+            const isGenre = genre && genre !== "Todas" ? book.genre === genre : true
+            const isPageCount = pageCount ? book.pages >= pageCount : true
+            const isName = name ? book.title.toLowerCase().includes(name.toLowerCase()) : true
+
+            return isGenre && isPageCount && isName
+        })
+
+        set(() => ({
+            books: {
+                library: filteredBooks
+            },
+        }))
+    },
+
+    resetFilterBooksParams: () => {
+        set(() => ({ filterParams: initialFilterParams, rangeValue: 0 }))
+        get().filterBooks()
+    },
+
+    handleBookList: (book, action) => {
+        if (action === 'add') {
+            setLocalStorageBooks(book)
+
+            set((state) => ({
+                books: {
+                    library: state.books.library.filter(({ book: UiBook }) => UiBook !== book)
+                },
+                toReadBooks: [...state.toReadBooks, book]
+            }))
+        }
+
+        if (action === 'remove') {
+            removeLocalStorageBooks(book)
+
+            set((state) => ({
+                books: {
+                    library: [...state.books.library, { book }]
+                },
+                toReadBooks: state.toReadBooks.filter((toReadBook) => toReadBook !== book)
+            }))
+        }
+    },
+
+    sortReadListBooks: (newReadList) => {
+        setLocalStorageToReadBooks(newReadList)
+
+        set(() => ({
+            toReadBooks: newReadList
+        }))
+    },
+
+    setModalBook: (book) => {
+        set(() => ({
+            modalBook: book
+        }))
+    }
+}))
