@@ -13,9 +13,9 @@ BooksHub es una plataforma en línea que permite a los amantes de la lectura des
 
 ## Capturas de Pantalla
 
-![](public\cap1.png)
+![]([public\cap1.png](https://github.com/jairayafranco/BookHub/blob/main/public/cap1.png?raw=true))
 
-![](public\cap2.png)
+![]([public\cap2.png](https://github.com/jairayafranco/BookHub/blob/main/public/cap2.png?raw=true))
 
 ## Instalación
 
