@@ -27,7 +27,8 @@ export default function SideBar() {
                     </div>
                 )
             }
-            <div className="flex flex-col items-center gap-2 m-3">
+
+            <div className="flex flex-col items-center gap-2 m-3" style={{ touchAction: "none" }}>
                 <DndContext
                     onDragEnd={handleDragEnd}
                     collisionDetection={closestCenter}
