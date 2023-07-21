@@ -21,10 +21,11 @@ export const useBookStore = create<Store>()((set, get) => ({
     },
 
     getPageCount: () => {
-        const storeBooks = get().books
+        const storeBooks = getLocalStorageBooks()
         const pages = storeBooks.library.map(({ book }) => book.pages)
-        const minPageCount = Math.min(...pages) === Infinity ? 0 : Math.min(...pages)
-        const maxPageCount = Math.max(...pages) === -Infinity ? 0 : Math.max(...pages)
+        const pagesLength = pages.length ? pages : [0]
+        const minPageCount = Math.min(...pagesLength)
+        const maxPageCount = Math.max(...pagesLength)
 
         return { minPageCount, maxPageCount }
     },
@@ -64,7 +65,7 @@ export const useBookStore = create<Store>()((set, get) => ({
     },
 
     resetFilterBooksParams: () => {
-        set(() => ({ filterParams: initialFilterParams, rangeValue: 0 }))
+        set((state) => ({ filterParams: initialFilterParams, rangeValue: state.getPageCount().minPageCount }))
         get().filterBooks()
     },
 
@@ -94,15 +95,10 @@ export const useBookStore = create<Store>()((set, get) => ({
 
     sortReadListBooks: (newReadList) => {
         setLocalStorageToReadBooks(newReadList)
-
-        set(() => ({
-            toReadBooks: newReadList
-        }))
+        set(() => ({ toReadBooks: newReadList }))
     },
 
     setModalBook: (book) => {
-        set(() => ({
-            modalBook: book
-        }))
+        set(() => ({ modalBook: book }))
     }
 }))

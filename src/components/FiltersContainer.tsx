@@ -6,17 +6,22 @@ import { useBookStore } from "../store/useBookStore";
 export default function FiltersContainer() {
     const { filterBooks, resetFilterBooksParams } = useBookStore();
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        filterBooks()
+    }
+
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             <div className="sm:flex flex-row gap-10">
                 <Search />
                 <Dropdown />
                 <Range />
             </div>
             <div className="flex gap-1 mt-2">
-                <button className="btn btn-sm btn-accent" onClick={filterBooks}>Buscar</button>
-                <button className="btn btn-sm btn-secondary" onClick={resetFilterBooksParams} type="reset">Limpiar</button>
+                <button className="btn btn-sm btn-accent" type="submit">Buscar</button>
+                <button className="btn btn-sm btn-secondary" onClick={resetFilterBooksParams}>Limpiar</button>
             </div>
-        </div>
+        </form>
     );
 }

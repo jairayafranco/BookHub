@@ -6,7 +6,6 @@ export default function Range() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setRangeValue(Number(e.target.value))
-        setFilterBookParams("pageCount", rangeValue)
     }
 
     return (
@@ -17,19 +16,16 @@ export default function Range() {
             >
                 Filtrar por Paginas
             </label>
-            <div className="flex gap-2">
-                <label>{minPageCount}</label>
-                <div className="tooltip tooltip-bottom" data-tip={rangeValue}>
-                    <input
-                        type="range"
-                        min={minPageCount}
-                        max={maxPageCount}
-                        value={rangeValue}
-                        className="range range-xs"
-                        onChange={handleChange}
-                    />
-                </div>
-                <label>{maxPageCount}</label>
+            <div className="tooltip tooltip-bottom" data-tip={rangeValue}>
+                <input
+                    type="range"
+                    min={minPageCount}
+                    max={maxPageCount}
+                    value={rangeValue}
+                    className="range range-xs"
+                    onChange={handleChange}
+                    onClickCapture={() => setFilterBookParams("pageCount", rangeValue)}
+                />
             </div>
         </div>
     );
