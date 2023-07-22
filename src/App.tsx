@@ -1,4 +1,3 @@
-import './App.css'
 import 'animate.css';
 import Container from './components/Container'
 import Header from './components/Header'
