@@ -10,15 +10,34 @@ export default function ModalBookContent() {
                     <img className="w-44 h-64" src={book?.cover} />
                     <div>
                         <h1 className="text-2xl font-bold">{book?.title}</h1>
-                        <div className="my-2">
-                            <p className="text-sm font-bold">Autor: {book?.author.name}</p>
-                            <p className="text-sm font-bold">Otros libros: {book?.author.otherBooks.join(', ')}</p>
-                        </div>
-                        <p className="text-sm font-bold">Genero: {book?.genre}</p>
-                        <p className="text-sm font-bold">Año: {book?.year}</p>
-                        <p className="text-sm font-bold">ISBN: {book?.ISBN}</p>
-                        <p className="text-sm font-bold">Descripción: {book?.synopsis}</p>
-                        <p className="text-sm font-bold">Paginas: {book?.pages}</p>
+                        <p>
+                            <span className="text-md font-bold">Autor: </span>
+                            <span className="text-sm">{book?.author.name}</span>
+                        </p>
+                        <p>
+                            <span className="text-md font-bold">Otros libros: </span>
+                            <span className="text-sm">{book?.author.otherBooks.join(', ')}</span>
+                        </p>
+                        <p>
+                            <span className="text-md font-bold">Genero: </span>
+                            <span className="text-sm">{book?.genre}</span>
+                        </p>
+                        <p>
+                            <span className="text-md font-bold">Año: </span>
+                            <span className="text-sm">{book?.year}</span>
+                        </p>
+                        <p>
+                            <span className="text-md font-bold">ISBN: </span>
+                            <span className="text-sm">{book?.ISBN}</span>
+                        </p>
+                        <p>
+                            <span className="text-md font-bold">Descripción: </span>
+                            <span className="text-sm">{book?.synopsis}</span>
+                        </p>
+                        <p>
+                            <span className="text-md font-bold">Paginas: </span>
+                            <span className="text-sm">{book?.pages}</span>
+                        </p>
                     </div>
                 </div>
             </form>
@@ -26,6 +45,5 @@ export default function ModalBookContent() {
                 <button>close</button>
             </form>
         </dialog>
-
     );
 }

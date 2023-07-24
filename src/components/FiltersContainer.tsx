@@ -1,6 +1,6 @@
-import Range from "./Range";
-import Dropdown from "./Dropdown";
-import Search from "./Search";
+import SearchBook from "./features/SearchBook";
+import GenreDropdown from "./features/GenreDropdown";
+import BookRangePages from "./features/BookRangePages";
 import { useBookStore } from "../store/useBookStore";
 
 export default function FiltersContainer() {
@@ -14,9 +14,9 @@ export default function FiltersContainer() {
     return (
         <form onSubmit={handleSubmit}>
             <div className="sm:flex flex-row gap-10">
-                <Search />
-                <Dropdown />
-                <Range />
+                <SearchBook />
+                <GenreDropdown />
+                <BookRangePages />
             </div>
             <div className="flex gap-1 mt-2">
                 <button className="btn btn-sm btn-accent" type="submit">Buscar</button>

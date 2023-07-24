@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { Store } from '../types/Store'
 import { getLocalStorageBooks, getLocalStorageToReadBooks, setLocalStorageBooks, removeLocalStorageBooks, setLocalStorageToReadBooks } from '../utils/storageBooks'
-import '../utils/syncTabs'
 
 const initialFilterParams = {
     genre: "Todas",
@@ -13,12 +12,7 @@ export const useBookStore = create<Store>()((set, get) => ({
     books: getLocalStorageBooks(),
     toReadBooks: getLocalStorageToReadBooks(),
     filterParams: initialFilterParams,
-    rangeValue: 0,
     modalBook: null,
-
-    setRangeValue: (value) => {
-        set(() => ({ rangeValue: value }))
-    },
 
     getPageCount: () => {
         const storeBooks = getLocalStorageBooks()

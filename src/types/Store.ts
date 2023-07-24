@@ -9,14 +9,12 @@ export type Store = {
         name?: string;
     };
     modalBook: Book | null;
-    rangeValue: number;
-    setRangeValue: (value: number) => void;
     getPageCount: () => { minPageCount: number; maxPageCount: number }
     getBookGenres: () => string[];
     setFilterBookParams: (name: string, value: string | number) => void;
     filterBooks: () => void;
     resetFilterBooksParams: () => void;
-    handleBookList: (book: Book, action: string) => void;
+    handleBookList: (book: Book, action: "add" | "remove") => void;
     sortReadListBooks: (newReadList: Book[]) => void;
     setModalBook: (book: Book | null) => void;
 }
