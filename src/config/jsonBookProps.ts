@@ -1,4 +1,4 @@
-import JSONBooks from '../../src/books.json'
+import JSONBooks from '../../src/data/books.json'
 
 interface JSONBook {
     title: string;
