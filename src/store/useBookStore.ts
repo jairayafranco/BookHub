@@ -11,10 +11,13 @@ const initialFilterParams = {
 
 export const useBookStore = create<Store>()((set, get) => {
     syncTabs((books) => {
-        set(() => ({
-            books: books.books,
-            toReadBooks: books.toReadBooks
-        }))
+        if (books.books) {
+            set(() => ({ books: books.books }))
+        }
+
+        if (books.toReadBooks) {
+            set(() => ({ toReadBooks: books.toReadBooks }))
+        }
     })
 
     return {
