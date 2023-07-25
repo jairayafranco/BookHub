@@ -1,25 +1,18 @@
 import { Books, Book } from "../interfaces/Book";
+import { SyncTabs, SyncTabsBooks } from "../interfaces/SyncTabs";
 
-// const bc = new BroadcastChannel('sync-tabs');
+export const syncTabs = (callback: SyncTabs) => {
+    window.addEventListener('storage', (event) => {
+        const newData: SyncTabsBooks = {};
 
-// export const syncTabs = (callback: (data: any) => void) => {
-//     bc.onmessage = (ev) => {
-//         callback(ev.data);
-//     }
-// }
+        if (event.key === 'books') {
+            newData.books = JSON.parse(event.newValue || "{ library: [] }") as Books;
+        }
 
-// export const sendToTabs = (data: any) => {
-//     bc.postMessage(data);
-// }
+        if (event.key === 'toReadBooks') {
+            newData.toReadBooks = JSON.parse(event.newValue || "[]") as Book[];
+        }
 
-
-window.addEventListener('storage', (event) => {
-    if (event.key === 'books') {
-        const books = JSON.parse(event.newValue || "{ library: [] }") as Books;
-        console.log(books);
-    }
-    if (event.key === 'toReadBooks') {
-        const books = JSON.parse(event.newValue || "[]") as Book[];
-        console.log(books);
-    }
-})
+        callback(newData);
+    })
+}

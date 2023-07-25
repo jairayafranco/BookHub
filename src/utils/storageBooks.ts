@@ -19,7 +19,7 @@ export const getLocalStorageToReadBooks = () => JSON.parse(localStorage.getItem(
 
 export const setLocalStorageBooks = (book: Book) => {
     const toReadBooks = getLocalStorageToReadBooks()
-    const newToReadBooks = toReadBooks.concat(book)
+    const newToReadBooks = [...toReadBooks, book]
     setStorage({ name: 'toReadBooks', data: newToReadBooks })
 
     const books = getLocalStorageBooks()
